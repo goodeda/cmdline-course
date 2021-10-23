@@ -4,9 +4,11 @@ FREQLISTS=$(BOOKS:%=results/%.freq.txt)
 
 SENTEDBOOKS=$(BOOKS:%=results/%.sent.txt)
 
+PARSEDBOOKS=$(BOOKS:%=results/%.parsed.txt)
+
 NOMD_BOOKLISTS=$(BOOKS:%=data/%.no_md.txt)
 
-all: $(FREQLISTS) $(SENTEDBOOKS) results/all.freq.txt results/all.sent.txt
+all: $(FREQLISTS) $(SENTEDBOOKS) $(PARSEDBOOKS) results/all.freq.txt results/all.sent.txt
 
 clean:
 	rm -f results/* data/*no_md.txt
@@ -22,3 +24,6 @@ results/%.sent.txt: data/%.no_md.txt
 
 data/all.no_md.txt: $(NOMD_BOOKLISTS) 
 	cat $^ > $@ 
+
+results/%.parsed.txt: results/%.sent.txt
+	cat $< > $@
